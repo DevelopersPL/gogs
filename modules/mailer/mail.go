@@ -67,7 +67,7 @@ func CreateUserActiveCode(u *models.User, startInf interface{}) string {
 // Send user register mail with active code
 func SendRegisterMail(r macaron.Render, u *models.User) {
 	code := CreateUserActiveCode(u, nil)
-	subject := "Register success, Welcome"
+	subject := "Zarejestrowano pomyślnie - witamy w gitman.pl!"
 
 	data := GetMailTmplData(u)
 	data["Code"] = code
@@ -87,7 +87,7 @@ func SendRegisterMail(r macaron.Render, u *models.User) {
 func SendActiveMail(r macaron.Render, u *models.User) {
 	code := CreateUserActiveCode(u, nil)
 
-	subject := "Verify your e-mail address"
+	subject := "Zweryfikuj swój adres e-mail"
 
 	data := GetMailTmplData(u)
 	data["Code"] = code
@@ -107,7 +107,7 @@ func SendActiveMail(r macaron.Render, u *models.User) {
 func SendResetPasswdMail(r macaron.Render, u *models.User) {
 	code := CreateUserActiveCode(u, nil)
 
-	subject := "Reset your password"
+	subject := "Zresetuj swoje hasło"
 
 	data := GetMailTmplData(u)
 	data["Code"] = code
@@ -148,7 +148,7 @@ func SendIssueNotifyMail(u, owner *models.User, repo *models.Repository, issue *
 	}
 
 	subject := fmt.Sprintf("[%s] %s(#%d)", repo.Name, issue.Name, issue.Index)
-	content := fmt.Sprintf("%s<br>-<br> <a href=\"%s%s/%s/issues/%d\">View it on Gogs</a>.",
+	content := fmt.Sprintf("%s<br>-<br> <a href=\"%s%s/%s/issues/%d\">Zobacz na gitman.pl</a>.",
 		base.RenderSpecialLink([]byte(issue.Content), owner.Name+"/"+repo.Name),
 		setting.AppUrl, owner.Name, repo.Name, issue.Index)
 	msg := NewMailMessageFrom(tos, u.Email, subject, content)
@@ -186,7 +186,7 @@ func SendIssueMentionMail(r macaron.Render, u, owner *models.User,
 func SendCollaboratorMail(r macaron.Render, u, owner *models.User,
 	repo *models.Repository) error {
 
-	subject := fmt.Sprintf("%s added you to %s", owner.Name, repo.Name)
+	subject := fmt.Sprintf("%s dodał Cię do %s", owner.Name, repo.Name)
 
 	data := GetMailTmplData(nil)
 	data["RepoLink"] = path.Join(owner.Name, repo.Name)
